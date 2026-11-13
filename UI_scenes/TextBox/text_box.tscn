@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://biawi0iex0w1a"]
+[gd_scene load_steps=6 format=3 uid="uid://biawi0iex0w1a"]
 
-[ext_resource type="Theme" uid="uid://rgyna2d0tcac" path="res://UI_themes/dark_theme.tres" id="1_6aaau"]
-[ext_resource type="Script" uid="uid://bvgi2lc33xrks" path="res://UI_scripts/text_box/text_box.gd" id="1_nwibb"]
-[ext_resource type="Theme" uid="uid://dgootblj225il" path="res://UI_themes/default_theme.tres" id="2_0kxgl"]
-[ext_resource type="Resource" uid="uid://dhn5rikla81w0" path="res://UI_scripts/text_box/dialog_data_example.tres" id="3_6aaau"]
+[ext_resource type="Theme" uid="uid://rgyna2d0tcac" path="res://UI_themes/dark_theme.tres" id="1_ib27d"]
+[ext_resource type="Script" uid="uid://bvgi2lc33xrks" path="res://UI_scripts/text_box/text_box.gd" id="2_7nphg"]
+[ext_resource type="Resource" uid="uid://dhn5rikla81w0" path="res://UI_scripts/text_box/dialog_data_example.tres" id="3_btqhr"]
+[ext_resource type="Theme" uid="uid://dgootblj225il" path="res://UI_themes/default_theme.tres" id="4_0iytm"]
+[ext_resource type="PackedScene" uid="uid://bgmn3rsflj8xj" path="res://UI_scenes/TextBox/character_portrait.tscn" id="5_e4qg0"]
 
 [node name="TextBox" type="Control" node_paths=PackedStringArray("click_sfx", "hover_sfx")]
 layout_mode = 3
@@ -14,9 +15,9 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_6aaau")
-script = ExtResource("1_nwibb")
-dialog_data = ExtResource("3_6aaau")
+theme = ExtResource("1_ib27d")
+script = ExtResource("2_7nphg")
+dialog_data = ExtResource("3_btqhr")
 click_sfx = NodePath("audio/click")
 hover_sfx = NodePath("audio/hover")
 
@@ -34,7 +35,14 @@ offset_right = 150.0
 offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_0kxgl")
+theme = ExtResource("4_0iytm")
+
+[node name="CharacterPortrait" parent="Panel" instance=ExtResource("5_e4qg0")]
+z_index = -1
+offset_left = 40.0
+offset_top = -39.0
+offset_right = 40.0
+offset_bottom = -39.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
@@ -51,7 +59,7 @@ theme_override_constants/margin_bottom = 7
 [node name="Label" type="RichTextLabel" parent="Panel/MarginContainer"]
 clip_contents = false
 layout_mode = 2
-theme = ExtResource("2_0kxgl")
+theme = ExtResource("4_0iytm")
 bbcode_enabled = true
 text = "[wave]wave[/wave]"
 scroll_active = false
@@ -70,7 +78,7 @@ offset_left = -54.0
 offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
-theme = ExtResource("2_0kxgl")
+theme = ExtResource("4_0iytm")
 bbcode_enabled = true
 text = "[wave]E[/wave]"
 horizontal_alignment = 1
@@ -90,36 +98,8 @@ custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource("2_0kxgl")
+theme = ExtResource("4_0iytm")
 text = "Skip Dialog"
-
-[node name="name_cont" type="MarginContainer" parent="Panel"]
-layout_mode = 1
-offset_right = 80.0
-offset_bottom = 61.0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = -29
-theme_override_constants/margin_bottom = 60
-
-[node name="name_panel" type="Panel" parent="Panel/name_cont"]
-custom_minimum_size = Vector2(80, 30)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="name_label" type="Label" parent="Panel/name_cont/name_panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -8.0
-offset_right = 30.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Name"
 
 [node name="audio" type="Node" parent="."]
 

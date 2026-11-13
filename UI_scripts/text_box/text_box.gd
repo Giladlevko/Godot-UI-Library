@@ -13,8 +13,8 @@ var effect_end:String
 var dialog_ended:bool
 var forced_end:bool
 @onready var skip_button: Button = $Panel/skip_cont/skip_button
-@onready var name_panel: Panel = $Panel/name_cont/name_panel
-@onready var name_label: Label = $Panel/name_cont/name_panel/name_label
+
+@onready var character_portrait: CharacterPortrait = $Panel/CharacterPortrait
 
 
 # Called when the node enters the scene tree for the first time.
@@ -40,19 +40,18 @@ func select_text(id: String)->DialogEntry:
 		return dialog_data.entries[id]
 	return null
 
-func display_speaker_name(lines:DialogLine):
-	name_panel.visible = false
-	var speaker_name:String = lines.speaker
-	if speaker_name != "Game":
-		name_label.text = speaker_name
-		name_panel.custom_minimum_size.x = (
-			speaker_name.length()*name_label.get_theme_font_size("font_size")
-			)
-		tween_visibility(name_panel,true)
 
+signal character_switched
+##Switches the Character portrait to the given character
+func switch_character(character:CharacterData):
+	character_portrait.hide_character()
+	await character_portrait.anim_finished
+	character_portrait.display_character(character)
+	character_switched.emit()
 
-##Plays the corresponding Dialog based on a given Dialog_Name
+##Plays the corresponding Dialog based on a given DialogName
 func play_dialog(dialog_name:String,effect:String = "wave"):
+	character_portrait.setup()
 	forced_end = false
 	reset_text()
 	tween_visibility(self,true)
@@ -61,7 +60,8 @@ func play_dialog(dialog_name:String,effect:String = "wave"):
 	if effect !="": set_effect(effect)
 	var dialog:DialogEntry = select_text(dialog_name)
 	for text_lines:DialogLine in dialog.Dialog:
-		display_speaker_name(text_lines)
+		switch_character(text_lines.speaker)
+		await character_switched
 		for line in text_lines.lines:
 			if user_skiped():break
 			display_text(line,effect)
@@ -73,7 +73,7 @@ func play_dialog(dialog_name:String,effect:String = "wave"):
 		if text_lines != dialog.Dialog[-1]:
 			pass
 			await input_pressed
-			
+		
 	user_skiped()
 	dialog_ended = true
 	
