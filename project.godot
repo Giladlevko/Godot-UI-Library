@@ -18,6 +18,10 @@ config/icon="res://icon.svg"
 
 UI_GLOBAL="*res://UI_scripts/ui_global.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [file_customization]
 
 folder_colors={

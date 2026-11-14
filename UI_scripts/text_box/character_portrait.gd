@@ -8,6 +8,7 @@ class_name CharacterPortrait
 @onready var port_texture: TextureRect = $HBoxContainer/portrait_panel/portrait_container/TextureRect
 
 
+
 signal anim_finished
 
 # Called when the node enters the scene tree for the first time.
@@ -50,8 +51,11 @@ func display_character(character:CharacterData):
 
 func set_character(character:CharacterData):
 	var speaker_name:String = character.name
-	port_texture.texture = character.portrait
-	portrait_panel.tooltip_text = character.description
+	if(character.portrait != null):
+		portrait_panel.visible = true
+		port_texture.texture = character.portrait
+	else:portrait_panel.visible = false
+	name_panel.tooltip_text = character.description
 	if speaker_name != "Game":
 		name_label.text = speaker_name
 		name_panel.custom_minimum_size.x = (

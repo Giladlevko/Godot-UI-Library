@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://clovevcxnu2qx"]
+[gd_scene load_steps=5 format=3 uid="uid://clovevcxnu2qx"]
 
 [ext_resource type="Theme" uid="uid://rgyna2d0tcac" path="res://UI_themes/dark_theme.tres" id="1_kmtba"]
 [ext_resource type="Script" uid="uid://cqohh8e5coacq" path="res://UI_scripts/audio_controler.gd" id="1_onfh8"]
+[ext_resource type="AudioStream" uid="uid://chph6mnf2jvix" path="res://UI_assets/button_hover_sfx_example.ogg" id="3_velpv"]
+[ext_resource type="AudioStream" uid="uid://c8y4h362h8bn6" path="res://UI_assets/sbutton_click_sfx_example.ogg" id="4_c6csw"]
 
 [node name="audio_controler" type="Control"]
 layout_mode = 3
@@ -159,10 +161,12 @@ text = "Close"
 [node name="button_audio" type="Node" parent="."]
 
 [node name="click_sfx" type="AudioStreamPlayer" parent="button_audio"]
+stream = ExtResource("3_velpv")
 volume_db = -17.0
 bus = &"UI"
 
 [node name="hover_sfx" type="AudioStreamPlayer" parent="button_audio"]
+stream = ExtResource("4_c6csw")
 volume_db = -20.0
 bus = &"UI"
 

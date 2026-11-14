@@ -9,10 +9,11 @@ class_name UI
 var buttons:Array[Button] = []
 signal vis_changed
 
-##Sets the game to unpaused and lightens the screen
+##Sets the game to unpaused, lightens the screen and turns song on
 func enter_trans():
 	if get_tree().paused: get_tree().paused = false
 	lighten_screen()
+	song_on(song)
 
 ##Connects the buttons to on_mouse_entered, on_mouse_exited && base_button_pressed 
 ##global function. These functions handle sound and Shrink / Expand effects
@@ -60,6 +61,7 @@ func tween_music(val:float,music:AudioStreamPlayer = song,dur:float = 0.4):
 	tween.tween_property(music,"volume_linear",val,dur)
 	await tween.finished
 	volume_changed.emit()
+	volume_changed.emit.call_deferred()
 
 ##Changes the visibility of the given node by tweening it's Alpha value
 ##then changes the visibile variable to the given Boolean
@@ -100,8 +102,9 @@ func song_on(music:AudioStreamPlayer = song,db_val:float = -15,dur:float = 5):
 
 ##Darkens the screen, turns the song off, and switches to the given scene
 func handle_scene_transition(next_scene:String):
-	darken_screen()
-	await vis_changed
-	song_off()
+	var dur:float = 0.3
+	darken_screen(dur)
+	song_off(song,dur)
 	await volume_changed
 	UI_GLOBAL.switch_scenes(next_scene)
+	
